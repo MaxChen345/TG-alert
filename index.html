@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 Telegram 雲端即時警報監控系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans min-h-screen">
+
+    <nav class="border-b border-gray-800 bg-gray-900 px-6 py-4 shadow-xl">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wider text-teal-400 flex items-center gap-2">
+                <span>🚨</span> TG-Alert Monitor Control Panel
+            </h1>
+            <span class="bg-green-500/10 text-green-400 text-xs px-3 py-1 rounded-full border border-green-500/20 font-mono flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Local Backend Active
+            </span>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="md:col-span-1 space-y-6">
+            <div class="bg-gray-800/50 backdrop-blur border border-gray-700/50 rounded-2xl p-6 shadow-lg">
+                <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">⚙️ 通知參數設定</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 font-medium">Bark 裝置金鑰 1</label>
+                        <input type="text" value="Fgrz2C9PXKGiXNZTRr8h3D" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 font-medium">🚨 警報連續轟炸時長</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-gray-600 transition">
+                                <input type="radio" name="duration" value="1" class="text-teal-500 focus:ring-0">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-200">溫和提醒</p>
+                                    <p class="text-xs text-gray-500">響鈴 1 次，適用一般訊息</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-teal-500/50 bg-teal-500/5 cursor-pointer hover:border-teal-400 transition">
+                                <input type="radio" name="duration" value="6" checked class="text-teal-500 focus:ring-0">
+                                <div>
+                                    <p class="text-sm font-medium text-teal-400">奪命連環催（推薦）</p>
+                                    <p class="text-xs text-teal-500/70">連續轟炸 6 次 / 每次隔 2 秒</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="alert('前端介面正常！下一階段我們將串接後端 API 觸發實體推播。')" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-gray-900 font-bold py-3 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 text-center block text-sm">
+                        ⚡ 測試發送即時推播
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-2 space-y-6">
+            <div class="bg-gray-800/50 backdrop-blur border border-gray-700/50 rounded-2xl p-6 shadow-lg">
+                <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">📺 雲端監控頻道清單</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <input type="text" placeholder="請輸入 Telegram 頻道 ID 或 @帳號 (例如: -1003794809401)" class="flex-1 bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
+                    <button class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition">
+                        + 新增監控
+                    </button>
+                </div>
+
+                <div class="overflow-hidden rounded-xl border border-gray-700/50">
+                    <table class="w-full text-left border-collapse bg-gray-900/50">
+                        <thead>
+                            <tr class="bg-gray-800 text-gray-400 text-xs tracking-wider uppercase border-b border-gray-700">
+                                <th class="px-4 py-3">頻道名稱 / ID</th>
+                                <th class="px-4 py-3">監聽狀態</th>
+                                <th class="px-4 py-3">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-gray-800 text-gray-300">
+                            <tr>
+                                <td class="px-4 py-4 font-mono text-gray-400">-1003794809401 <span class="text-xs text-gray-500 block">(Polymarket Signal)</span></td>
+                                <td class="px-4 py-4"><span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">監聽中</span></td>
+                                <td class="px-4 py-4"><button class="text-red-400 hover:text-red-300 transition text-xs font-medium">移除</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-xs text-gray-600 mt-12 py-6 border-t border-gray-800 font-mono">
+        Designed for Full-Stack Portfolio Showcase | Powered by GitHub Pages & FastAPI
+    </footer>
+
+</body>
+</html>
