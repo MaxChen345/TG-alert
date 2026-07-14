@@ -28,7 +28,7 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-sm text-gray-400 mb-2 font-medium">Bark 裝置金鑰 1</label>
-                        <input type="text" value="Fgrz2C9PXKGiXNZTRr8h3D" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
+                        <input type="text" id="barkUrl" value="Fgrz2C9PXKGiXNZTRr8h3D" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
                     </div>
 
                     <div>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <button onclick="alert('前端介面正常！下一階段我們將串接後端 API 觸發實體推播。')" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-gray-900 font-bold py-3 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 text-center block text-sm">
+                    <button onclick="testTrigger()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-gray-900 font-bold py-3 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 text-center block text-sm">
                         ⚡ 測試發送即時推播
                     </button>
                 </div>
