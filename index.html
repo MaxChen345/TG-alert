@@ -95,6 +95,54 @@
     <footer class="text-center text-xs text-gray-600 mt-12 py-6 border-t border-gray-800 font-mono">
         Designed for Full-Stack Portfolio Showcase | Powered by GitHub Pages & FastAPI
     </footer>
+    <!-- 貼在 </footer> 下方 -->
+    <script>
+        async function testTrigger() {
+            // 1. 取得網頁輸入框中的 Bark 金鑰與勾選的時長值
+            const barkKey = document.getElementById('barkUrl').value.trim();
+            const duration = parseInt(document.querySelector('input[name="duration"]:checked').value);
+            
+            if (!barkKey) {
+                alert("請先輸入您的 Bark 裝置金鑰！");
+                return;
+            }
+
+            // 改變按鈕狀態，顯示「發送中...」
+            const btn = document.querySelector('button[onclick="testTrigger()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "⏳ 正在透過 FastAPI 發送中...";
+            btn.disabled = true;
+
+            try {
+                // 2. 發送 POST 請求到我們本地執行的 FastAPI 後端 (port 8000)
+                const response = await fetch('http://127.0.0.1:8000/api/test-trigger', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        bark_key: barkKey,
+                        duration: duration
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok && result.status === 'success') {
+                    alert(`✅ 成功！後端已觸發 Bark 連續發送 ${duration} 次警報！請檢查手機。`);
+                } else {
+                    alert(`❌ 發送失敗：${result.detail || '請確保本地 FastAPI 已經啟動！'}`);
+                }
+            } catch (error) {
+                console.error("連線錯誤:", error);
+                alert("❌ 無法連線到本地後端伺服器！請確認你已經在終端機啟動了 python app.py");
+            } finally {
+                // 還原按鈕狀態
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+    </script>
 
 </body>
 </html>
