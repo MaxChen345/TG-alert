@@ -21,46 +21,60 @@
 
     <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- 左側：通知參數設定 -->
+        <!-- 左側：通知與裝置設定 -->
         <div class="md:col-span-1 space-y-6">
-            <div class="bg-gray-800/50 backdrop-blur border border-gray-700/50 rounded-2xl p-6 shadow-lg">
-                <h2 class="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">⚙️ 通知參數設定</h2>
+            <div class="bg-gray-800/50 backdrop-blur border border-gray-700/50 rounded-2xl p-6 shadow-lg space-y-6">
+                <h2 class="text-lg font-semibold text-gray-200 flex items-center gap-2">⚙️ 警報全局參數</h2>
                 
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2 font-medium">Bark 裝置金鑰 1</label>
-                        <input type="text" id="barkUrl" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
+                <!-- 1. 勾選警報響鈴時長 -->
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2 font-medium">🚨 警報連續轟炸時長</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-gray-600 transition">
+                            <input type="radio" name="duration" value="1" id="dur-1" class="text-teal-500 focus:ring-0">
+                            <div>
+                                <p class="text-sm font-medium text-gray-200">溫和提醒</p>
+                                <p class="text-xs text-gray-500">響鈴 1 次，適用一般訊息</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-teal-500/50 bg-teal-500/5 cursor-pointer hover:border-teal-400 transition">
+                            <input type="radio" name="duration" value="6" id="dur-6" class="text-teal-500 focus:ring-0">
+                            <div>
+                                <p class="text-sm font-medium text-teal-400">奪命連環催（推薦）</p>
+                                <p class="text-xs text-teal-500/70">連續轟炸 6 次 / 每次隔 2 秒</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <hr class="border-gray-800" />
+
+                <!-- 2. Bark 裝置列表管理 -->
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-300 mb-3 flex items-center justify-between">
+                        <span>📱 Bark 接收裝置名單</span>
+                    </h3>
+                    
+                    <!-- 裝置清單渲染區 -->
+                    <div id="deviceList" class="space-y-3 mb-4">
+                        <!-- 由 JS 動態生成 -->
                     </div>
 
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2 font-medium">🚨 警報連續轟炸時長</label>
-                        <div class="space-y-2">
-                            <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-gray-700 cursor-pointer hover:border-gray-600 transition">
-                                <input type="radio" name="duration" value="1" id="dur-1" class="text-teal-500 focus:ring-0">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-200">溫和提醒</p>
-                                    <p class="text-xs text-gray-500">響鈴 1 次，適用一般訊息</p>
-                                </div>
-                            </label>
-                            <label class="flex items-center gap-3 bg-gray-900 p-3 rounded-lg border border-teal-500/50 bg-teal-500/5 cursor-pointer hover:border-teal-400 transition">
-                                <input type="radio" name="duration" value="6" id="dur-6" class="text-teal-500 focus:ring-0">
-                                <div>
-                                    <p class="text-sm font-medium text-teal-400">奪命連環催（推薦）</p>
-                                    <p class="text-xs text-teal-500/70">連續轟炸 6 次 / 每次隔 2 秒</p>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-2 pt-2">
-                        <button onclick="saveSettings()" class="flex-1 bg-gray-700 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-3 rounded-xl text-sm transition">
-                            💾 儲存設定
-                        </button>
-                        <button onclick="testTrigger()" class="flex-1 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-gray-900 font-bold py-2 px-3 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 text-center text-sm">
-                            ⚡ 測試推播
+                    <!-- 新增裝置輸入區 -->
+                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-700/50 space-y-2 text-xs">
+                        <p class="font-medium text-gray-400">新增接收裝置：</p>
+                        <input type="text" id="newDevName" placeholder="裝置備註 (例: 我的 iPhone)" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-gray-300 focus:outline-none focus:border-teal-500">
+                        <input type="text" id="newDevKey" placeholder="Bark 裝置金鑰 Key" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-2 py-1.5 text-gray-300 focus:outline-none focus:border-teal-500 font-mono">
+                        <button onclick="addDevice()" class="w-full bg-teal-500/10 border border-teal-500/20 text-teal-400 hover:bg-teal-500/20 font-bold py-1.5 rounded-lg transition">
+                            + 新增裝置
                         </button>
                     </div>
                 </div>
+
+                <!-- 儲存全域設定 -->
+                <button onclick="saveAllSettings()" class="w-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-gray-900 font-bold py-3 px-4 rounded-xl shadow-lg transition transform hover:-translate-y-0.5 active:translate-y-0 text-center text-sm">
+                    💾 儲存並同步設定
+                </button>
             </div>
         </div>
 
@@ -102,36 +116,140 @@
 
     <script>
         const API_BASE = "http://127.0.0.1:8000/api";
+        let localDevices = []; // 本機快取的裝置狀態陣列
 
-        // 🟢 1. 網頁開啟時，自動跟後端讀取目前的設定檔
+        // 🟢 1. 初始化讀取設定
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 const res = await fetch(`${API_BASE}/config`);
                 const config = await res.json();
                 
-                document.getElementById('barkUrl').value = config.bark_key;
                 if (config.duration === 1) {
                     document.getElementById('dur-1').checked = true;
                 } else {
                     document.getElementById('dur-6').checked = true;
                 }
+                
+                localDevices = config.devices || [];
+                renderDevices();
                 renderChannels(config.channels);
             } catch (err) {
-                console.error("無法連線至後端:", err);
-                alert("⚠️ 偵測到本地後端伺服器未啟動。請先在 VS Code 啟動 uvicorn / python3 app.py！");
+                console.error(err);
+                alert("⚠️ 偵測到本地後端伺服器未啟動。請在終端機啟動 python3 app.py！");
             }
         });
 
-        // 🟢 2. 渲染頻道列表的輔助函式
-        function renderChannels(channels) {
-            const tbody = document.getElementById('channelTableBody');
-            tbody.innerHTML = "";
+        // 🟢 2. 渲染裝置列表 (支援勾選與個別測試)
+        function renderDevices() {
+            const listDiv = document.getElementById('deviceList');
+            listDiv.innerHTML = "";
             
-            if (channels.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500">目前無監控任何頻道，請於上方新增。</td></tr>`;
+            if (localDevices.length === 0) {
+                listDiv.innerHTML = `<p class="text-xs text-gray-500 py-2">目前沒有設定任何裝置。</p>`;
                 return;
             }
 
+            localDevices.forEach((dev, index) => {
+                listDiv.innerHTML += `
+                    <div class="bg-gray-900/80 p-3 rounded-xl border ${dev.enabled ? 'border-teal-500/20' : 'border-gray-800'} flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <!-- 勾選啟動/停用 -->
+                            <input type="checkbox" ${dev.enabled ? 'checked' : ''} onchange="toggleDevice(${index})" class="rounded text-teal-500 focus:ring-0 cursor-pointer bg-gray-800 border-gray-700">
+                            <div>
+                                <p class="text-xs font-semibold ${dev.enabled ? 'text-gray-200' : 'text-gray-500 line-through'}">${dev.name}</p>
+                                <p class="text-[10px] text-gray-500 font-mono">${dev.key.substring(0,6)}***${dev.key.substring(dev.key.length-4)}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="testSingleDevice('${dev.key}')" class="text-[10px] text-teal-400 bg-teal-500/10 px-2 py-1 rounded hover:bg-teal-500/20 transition">⚡ 測試</button>
+                            <button onclick="deleteDevice(${index})" class="text-[10px] text-red-400 hover:text-red-300">移除</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // 🟢 3. 切換裝置啟用狀態
+        function toggleDevice(index) {
+            localDevices[index].enabled = !localDevices[index].enabled;
+            renderDevices();
+        }
+
+        // 🟢 4. 新增裝置 (前端快取)
+        function addDevice() {
+            const name = document.getElementById('newDevName').value.trim();
+            const key = document.getElementById('newDevKey').value.trim();
+            
+            if (!name || !key) {
+                alert("請完整輸入裝置名稱與金鑰！");
+                return;
+            }
+
+            const newDev = {
+                id: "dev_" + Date.now(),
+                name: name,
+                key: key,
+                enabled: true
+            };
+
+            localDevices.push(newDev);
+            renderDevices();
+            
+            // 清空輸入框
+            document.getElementById('newDevName').value = "";
+            document.getElementById('newDevKey').value = "";
+        }
+
+        // 🟢 5. 移除裝置
+        function deleteDevice(index) {
+            localDevices.splice(index, 1);
+            renderDevices();
+        }
+
+        // 🟢 6. 單一裝置發送測試推播
+        async function testSingleDevice(key) {
+            const duration = parseInt(document.querySelector('input[name="duration"]:checked').value);
+            try {
+                const res = await fetch(`${API_BASE}/test-trigger`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: key, duration: duration })
+                });
+                if (res.ok) {
+                    alert(`✅ 已對此裝置觸發 ${duration} 次測試警報！`);
+                } else {
+                    alert("❌ 測試發送失敗");
+                }
+            } catch (err) {
+                alert("❌ 無法連接後端");
+            }
+        }
+
+        // 🟢 7. 儲存全域設定到 config.json
+        async function saveAllSettings() {
+            const duration = parseInt(document.querySelector('input[name="duration"]:checked').value);
+            try {
+                const res = await fetch(`${API_BASE}/save-settings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ duration: duration, devices: localDevices })
+                });
+                if (res.ok) {
+                    alert("💾 所有裝置與時長設定已儲存並同步至 config.json！");
+                }
+            } catch (err) {
+                alert("❌ 儲存失敗，請確認後端運行中。");
+            }
+        }
+
+        // 🟢 8. 頻道渲染與增刪 (與之前邏輯相同)
+        function renderChannels(channels) {
+            const tbody = document.getElementById('channelTableBody');
+            tbody.innerHTML = "";
+            if (!channels || channels.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500">目前無監控任何頻道，請於上方新增。</td></tr>`;
+                return;
+            }
             channels.forEach(ch => {
                 tbody.innerHTML += `
                     <tr>
@@ -150,34 +268,10 @@
             });
         }
 
-        // 🟢 3. 儲存設定到後端
-        async function saveSettings() {
-            const barkKey = document.getElementById('barkUrl').value.trim();
-            const duration = parseInt(document.querySelector('input[name="duration"]:checked').value);
-            
-            try {
-                const res = await fetch(`${API_BASE}/save-settings`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ bark_key: barkKey, duration: duration })
-                });
-                const result = await res.json();
-                if (res.ok) alert("💾 設定已成功同步至後端 config.json 檔案中！");
-            } catch (err) {
-                alert("❌ 儲存失敗，請確保本地 FastAPI 執行中。");
-            }
-        }
-
-        // 🟢 4. 新增頻道到監聽名單
         async function addChannel() {
             const id = document.getElementById('newChannelId').value.trim();
             const name = document.getElementById('newChannelName').value.trim() || "未命名頻道";
-            
-            if (!id) {
-                alert("請填入頻道 ID！");
-                return;
-            }
-
+            if (!id) return alert("請輸入頻道 ID");
             try {
                 const res = await fetch(`${API_BASE}/channels`, {
                     method: 'POST',
@@ -192,50 +286,16 @@
                 } else {
                     alert(result.detail);
                 }
-            } catch (err) {
-                alert("❌ 新增失敗，請聯絡本地伺服器");
-            }
+            } catch (err) { alert("❌ 新增失敗"); }
         }
 
-        // 🟢 5. 刪除監聽頻道
         async function deleteChannel(id) {
-            if (!confirm("確定要移除此頻道監控嗎？")) return;
+            if (!confirm("確定移除頻道？")) return;
             try {
-                const res = await fetch(`${API_BASE}/channels/${id}`, {
-                    method: 'DELETE'
-                });
+                const res = await fetch(`${API_BASE}/channels/${id}`, { method: 'DELETE' });
                 const result = await res.json();
                 if (res.ok) renderChannels(result.channels);
-            } catch (err) {
-                alert("❌ 刪除失敗");
-            }
-        }
-
-        // 🟢 6. 測試發送
-        async function testTrigger() {
-            const barkKey = document.getElementById('barkUrl').value.trim();
-            const duration = parseInt(document.querySelector('input[name="duration"]:checked').value);
-            
-            if (!barkKey) {
-                alert("請先輸入您的 Bark 裝置金鑰！");
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE}/test-trigger`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ bark_key: barkKey, duration: duration })
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert(`✅ 已觸發連續 ${duration} 次警報！請檢查手機。`);
-                } else {
-                    alert(`❌ 失敗：${result.detail}`);
-                }
-            } catch (error) {
-                alert("❌ 連線錯誤，請確認 app.py 是否在執行");
-            }
+            } catch (err) { alert("❌ 刪除失敗"); }
         }
     </script>
 </body>
