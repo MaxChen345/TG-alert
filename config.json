@@ -5,6 +5,24 @@
         {
             "id": "-1003794809401",
             "name": "Polymarket Signal"
+        },
+        {
+            "id": "-1002739426091",
+            "name": "justin"
+        }
+    ],
+    "devices": [
+        {
+            "id": "dev_1784043548046",
+            "name": "Max",
+            "key": "Fgrz2C9PXKGiXNZTRr8h3D",
+            "enabled": true
+        },
+        {
+            "id": "dev_1784043592548",
+            "name": "tych3n",
+            "key": "C8bYbUeAo6LMEEas9yzMDR",
+            "enabled": true
         }
     ]
 }
